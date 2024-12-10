@@ -7,6 +7,6 @@ router.get("/readFoods", readFoods)
 
 router.post("/createFood", createFood)
 
-router.delete("/deleteFood", deleteFood)
+router.delete("/:id", deleteFood)
 
 export default router
