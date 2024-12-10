@@ -3,6 +3,8 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import connectDatabase from './config/connectDatabase.js'
 import { FRONTEND_URL, PORT } from './config/config.js'
+import authRoute from './routes/auth.js'
+import foodRoute from './routes/food.js'
 
 const app = express()
 
@@ -16,10 +18,9 @@ app.use(cors({
 
 
 app.use(cookieParser())
+app.use("/auth", authRoute)
+app.use("/food", foodRoute)
 
-app.get("/", (req, res) => {
-    res.send("api working")
-})
 
 async function startServer() {
 
