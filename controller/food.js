@@ -63,7 +63,8 @@ export const deleteFood = async (req, res) => {
         await Food.findByIdAndDelete(id)
 
         return res.json({
-            status: true
+            status: true,
+            message: "Food deleted successfully"
         })
     } 
     
