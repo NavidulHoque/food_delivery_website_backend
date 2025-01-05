@@ -5,8 +5,22 @@ import connectDatabase from './config/connectDatabase.js'
 import { FRONTEND_URL, PORT } from './config/config.js'
 import authRoute from './routes/auth.js'
 import foodRoute from './routes/food.js'
+import { createServer } from 'node:http';
+import { Server } from "socket.io"
+import socketEvents from './socketEvents.js'
 
 const app = express()
+
+// socket connection
+const server = createServer(app)
+export const io = new Server(server, {
+    cors: {
+        origin: FRONTEND_URL,
+        credentials: true
+    }
+})
+
+socketEvents(io)
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
