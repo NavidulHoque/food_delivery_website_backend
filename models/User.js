@@ -30,12 +30,13 @@ const UserSchema = new Schema({
         default: ""
     },
 
-    provider: {
-        type: String,
-        required: [true, 'Provider is required'],
-        trim: true
+    cart: {
+        type: Object,
+        default: {}
     }
-})
+
+    // {minimize: false} defines that if it is not given then cart's empty object won't be created
+}, {minimize: false})
 
 UserSchema.pre('save', async function (next) {
 
@@ -54,4 +55,4 @@ UserSchema.methods.comparePassword = async function (plainPassword, hashedPasswo
     return isMatched
 }
 
-export const User = mongoose.model('User', UserSchema)
+export const User = mongoose.models.User || mongoose.model('User', UserSchema)

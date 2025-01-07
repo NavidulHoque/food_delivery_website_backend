@@ -2,9 +2,10 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import connectDatabase from './config/connectDatabase.js'
-import { FRONTEND_URL, PORT } from './config/config.js'
+import { FRONTEND_URL, ADMIN_URL, PORT } from './config/config.js'
 import authRoute from './routes/auth.js'
 import foodRoute from './routes/food.js'
+import cartRoute from './routes/cart.js'
 import { createServer } from 'node:http';
 import { Server } from "socket.io"
 import socketEvents from './socketEvents.js'
@@ -26,7 +27,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use(cors({
-    origin: FRONTEND_URL,
+    origin: [FRONTEND_URL, ADMIN_URL],
     credentials: true
 }))
 
@@ -34,13 +35,14 @@ app.use(cors({
 app.use(cookieParser())
 app.use("/auth", authRoute)
 app.use("/food", foodRoute)
+app.use("/cart", cartRoute)
 
 
 async function startServer() {
 
     await connectDatabase()
 
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
         console.log(`Server listening on port ${PORT}`)
     })
 }

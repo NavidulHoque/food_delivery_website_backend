@@ -8,4 +8,6 @@ export const PORT = Number(process.env.PORT)
 
 export const FRONTEND_URL = process.env.FRONTEND_URL
 
+export const ADMIN_URL = process.env.ADMIN_URL
+
 export const SECRET = process.env.SECRET

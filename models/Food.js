@@ -33,4 +33,4 @@ const FoodSchema = new Schema({
     }
 })
 
-export const Food = mongoose.model('Food', FoodSchema)
+export const Food = mongoose.models.Food || mongoose.model('Food', FoodSchema)

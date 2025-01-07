@@ -1,4 +1,6 @@
+import { io } from "../index.js"
 import { Food } from "../models/food.js"
+
 
 export const readFoods = async (req, res) => {
 
@@ -38,6 +40,8 @@ export const createFood = async (req, res) => {
     try {
         await newFood.save()
 
+        io.emit('newFood')
+
         return res.json({
             status: true
         })
@@ -61,6 +65,8 @@ export const deleteFood = async (req, res) => {
 
     try {
         await Food.findByIdAndDelete(id)
+
+        io.emit('deleteFood')
 
         return res.json({
             status: true,
