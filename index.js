@@ -4,6 +4,7 @@ import cors from 'cors'
 import connectDatabase from './config/connectDatabase.js'
 import { FRONTEND_URL, ADMIN_URL, PORT } from './config/config.js'
 import authRoute from './routes/auth.js'
+import userRoute from './routes/user.js'
 import foodRoute from './routes/food.js'
 import cartRoute from './routes/cart.js'
 import { createServer } from 'node:http';
@@ -34,6 +35,7 @@ app.use(cors({
 
 app.use(cookieParser())
 app.use("/auth", authRoute)
+app.use("/user", userRoute)
 app.use("/food", foodRoute)
 app.use("/cart", cartRoute)
 

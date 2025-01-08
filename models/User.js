@@ -30,9 +30,21 @@ const UserSchema = new Schema({
         default: ""
     },
 
+    provider: {
+        type: String,
+        required: [true, 'Provider is required'],
+        trim: true
+    },
+
     cart: {
         type: Object,
         default: {}
+    },
+
+    role: {
+        type: String,
+        default: "user",
+        trim: true
     }
 
     // {minimize: false} defines that if it is not given then cart's empty object won't be created

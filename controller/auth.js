@@ -77,8 +77,6 @@ export const loginAnUser = async (req, res) => {
 
         const isMatched = await user.comparePassword(password, user.password)
 
-        const {_id, username, provider, creditBalance} = user
-
         if (!isMatched) {
             return res.json({
                 status: false,
@@ -88,7 +86,7 @@ export const loginAnUser = async (req, res) => {
 
         return res.json({
             status: true,
-            user: {_id, email, username, provider, creditBalance}
+            userID: user._id
         })
     }
 
