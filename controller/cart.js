@@ -2,11 +2,18 @@ import { User } from './../models/User.js'
 
 export const getCart = async (req, res) => {
 
-    const { userID } = req.params
+    const { email, provider } = req.body
 
     try {
 
-        const user = await User.findById(userID)
+        const user = await User.findOne({ email, provider })
+
+        if (!user) {
+            return res.json({
+                status: false,
+                message: "Cart not found"
+            })
+        }
 
         return res.json({
             status: true,
@@ -25,16 +32,39 @@ export const getCart = async (req, res) => {
     }
 }
 
-export const addToCart = async (req, res) => {
+export const updateCart = async (req, res) => {
 
-    const { userID, food } = req.params
+    const { email, provider, cart } = req.body
 
     try {
-        const {cart} = await User.findById(userID)
+
+        await User.findOneAndUpdate({ email, provider }, { cart })
+        
+        return res.json({
+            status: true
+        })
+    } 
+    
+    catch (error) {
+        console.error(error)
+
+        return res.json({
+            status: false,
+            message: "Something went wrong, please try again"
+        })
+    }
+}
+
+export const addToCart = async (req, res) => {
+
+    const { email, provider, food } = req.body
+
+    try {
+        const {cart} = await User.findOne({ email, provider })
 
         cart[food] = (cart[food] || 0) + 1;
 
-        await User.findByIdAndUpdate(userID, { cart })
+        await User.findOneAndUpdate({ email, provider }, { cart })
 
         return res.json({
             status: true
@@ -54,11 +84,9 @@ export const addToCart = async (req, res) => {
 
 export const removeFromCart = async (req, res) => {
 
-    const { userID, food } = req.params
+    const { email, provider, cart, food } = req.body
 
     try {
-
-        const {cart} = await User.findById(userID)
 
         if (cart[food] === 0) {
 
@@ -74,7 +102,7 @@ export const removeFromCart = async (req, res) => {
             delete cart[food]
         }
 
-        await User.findByIdAndUpdate(userID, { cart })
+        await User.findOneAndUpdate({ email, provider }, { cart })
 
         return res.json({
             status: true

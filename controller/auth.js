@@ -7,7 +7,7 @@ export const createAnUser = async (req, res) => {
 
     try {
 
-        let user = await User.findOne({ email, provider });
+        const user = await User.findOne({ email, provider });
 
         if (provider === "credentials") {
 
@@ -32,16 +32,17 @@ export const createAnUser = async (req, res) => {
 
             if (!user) {
 
-                user = new User({ username, email, provider, photo })
+                newUser = new User({ username, email, provider, photo })
 
-                await user.save()
+                await newUser.save()
 
                 res.json({
                     status: true
                 })
             }
 
-            else{
+            else {
+
                 res.json({
                     status: true
                 })
@@ -84,9 +85,11 @@ export const loginAnUser = async (req, res) => {
             })
         }
 
+        const { provider, username, photo, cart } = user
+
         return res.json({
             status: true,
-            userID: user._id
+            user: { email, provider, username, photo, cart }
         })
     }
 

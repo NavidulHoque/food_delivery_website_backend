@@ -1,12 +1,14 @@
 import express from 'express'
-import { addToCart, getCart, removeFromCart } from '../controller/cart.js'
+import { addToCart, getCart, removeFromCart, updateCart } from '../controller/cart.js'
 
 const router = express.Router()
 
-router.get("/get/:userID", getCart)
+router.post("/get", getCart)
 
-router.post("/add/:userID/:food", addToCart)
+router.put("/update", updateCart)
 
-router.post("/remove/:userID/:food", removeFromCart)
+router.put("/addAndUpdate", addToCart)
+
+router.put("/removeAndUpdate", removeFromCart)
 
 export default router
