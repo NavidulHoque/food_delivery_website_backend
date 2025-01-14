@@ -29,6 +29,16 @@ const OrderSchema = new Schema({
         default: Date.now()
     },
 
+    paymentType: {
+        type: String,
+        required: true
+    },
+
+    payment: {
+        type: Boolean,
+        default: false
+    },
+
     userID: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

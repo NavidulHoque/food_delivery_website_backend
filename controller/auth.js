@@ -85,11 +85,11 @@ export const loginAnUser = async (req, res) => {
             })
         }
 
-        const { provider, username, photo, cart } = user
+        const { provider, username, photo, cart, _id } = user
 
         return res.json({
             status: true,
-            user: { email, provider, username, photo, cart }
+            user: { id: _id.toString(), email, provider, username, photo, cart }
         })
     }
 

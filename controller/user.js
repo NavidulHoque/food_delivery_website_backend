@@ -8,11 +8,11 @@ export const readUser = async (req, res) => {
 
         const user = await User.findOne({email, provider})
 
-        const {username, photo, cart} = user
+        const {_id, username, photo, cart} = user
 
         return res.json({
             status: true,
-            user: {email, username, photo, provider, cart}
+            user: {id: _id.toString(), email, username, photo, provider, cart}
         })
     } 
     

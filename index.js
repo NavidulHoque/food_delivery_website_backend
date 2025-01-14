@@ -7,6 +7,7 @@ import authRoute from './routes/auth.js'
 import userRoute from './routes/user.js'
 import foodRoute from './routes/food.js'
 import cartRoute from './routes/cart.js'
+import orderRoute from './routes/order.js'
 import { createServer } from 'node:http';
 import { Server } from "socket.io"
 import socketEvents from './socketEvents.js'
@@ -38,6 +39,7 @@ app.use("/auth", authRoute)
 app.use("/user", userRoute)
 app.use("/food", foodRoute)
 app.use("/cart", cartRoute)
+app.use("/order", orderRoute)
 
 
 async function startServer() {

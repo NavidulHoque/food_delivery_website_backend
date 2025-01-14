@@ -11,3 +11,5 @@ export const FRONTEND_URL = process.env.FRONTEND_URL
 export const ADMIN_URL = process.env.ADMIN_URL
 
 export const SECRET = process.env.SECRET
+
+export const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY

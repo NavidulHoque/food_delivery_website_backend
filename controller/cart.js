@@ -2,11 +2,11 @@ import { User } from './../models/User.js'
 
 export const getCart = async (req, res) => {
 
-    const { email, provider } = req.body
+    const { userID } = req.params
 
     try {
 
-        const user = await User.findOne({ email, provider })
+        const user = await User.findById(userID)
 
         if (!user) {
             return res.json({
