@@ -1,23 +1,25 @@
 import { io } from "../index.js"
 import { Order } from "../models/Order.js"
+import { User } from "../models/User.js"
 
 
 export const placeOrder = async (req, res) => {
 
-    const { items, amount, address, paymentType, payment, userID } = req.body
+    const { foodItems, totalPrice, customerDetails, paymentType, userID } = req.body
 
     try {
 
         const newOrder = new Order({
-            items,
-            amount,
-            address,
+            foodItems,
+            totalPrice,
+            customerDetails,
             paymentType,
-            payment,
             userID
         })
 
         await newOrder.save()
+
+        await User.findByIdAndUpdate(userID, {cart: {}}, {new: true})
 
         return res.json({
             status: true
@@ -43,9 +45,9 @@ export const updateDeliveryStatus = async (req, res) => {
 
         const updatedOrder = await Order.findByIdAndUpdate(id, { status }, { new: true })
 
-        const { _id, items, amount } = updatedOrder
+        const { _id, foodItems, totalPrice } = updatedOrder
 
-        io.emit('updateDeliveryStatus', { id: _id.toString(), items, amount, status })
+        io.emit('updateDeliveryStatus', { id: _id.toString(), foodItems, totalPrice, status })
 
         return res.json({
             status: true
@@ -69,7 +71,7 @@ export const readUserOrders = async (req, res) => {
 
     try {
 
-        let userOrders = await Order.find({ userID: id })
+        const userOrders = await Order.find({ userID: id })
 
         if (userOrders.length === 0) {
 
@@ -79,16 +81,16 @@ export const readUserOrders = async (req, res) => {
             })
         }
 
-        userOrders = await Promise.all(userOrders.map(async (userOrder) => {
+        const orders = await Promise.all(userOrders.map(async (userOrder) => {
 
-            const { _id, items, amount, status } = userOrder
+            const { _id, foodItems, totalPrice, status } = userOrder
 
-            return { id: _id.toString(), items, amount, status }
+            return { id: _id.toString(), foodItems, totalPrice, status }
         }))
 
         return res.json({
             status: true,
-            userOrders
+            orders
         })
     }
 
@@ -119,9 +121,9 @@ export const readAllOrders = async (req, res) => {
 
         allOrders = await Promise.all(allOrders.map(async (allOrder) => {
 
-            const { _id, items, amount, address, status } = allOrder
+            const { _id, foodItems, totalPrice, customerDetails, status } = allOrder
 
-            return { id: _id.toString(), items, amount, address, status }
+            return { id: _id.toString(), foodItems, totalPrice, customerDetails, status }
         }))
 
         return res.json({

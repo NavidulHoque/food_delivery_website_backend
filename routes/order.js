@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.post("/place", placeOrder)
 router.put("/update", updateDeliveryStatus)
-router.get("/userOrders", readUserOrders)
+router.get("/userOrders/:id", readUserOrders)
 router.get("/allOrders", readAllOrders)
 
 export default router

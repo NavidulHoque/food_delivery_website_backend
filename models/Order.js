@@ -4,17 +4,17 @@ const { Schema } = mongoose
 
 const OrderSchema = new Schema({
 
-    items: {
+    foodItems: {
         type: Array,
         required: [true, 'Items are required']
     },
 
-    amount: {
+    totalPrice: {
         type: Number,
-        required: [true, 'Amount is required']
+        required: [true, 'price is required']
     },
 
-    address: {
+    customerDetails: {
         type: Object,
         required: [true, 'address is required']
     },
@@ -34,7 +34,7 @@ const OrderSchema = new Schema({
         required: true
     },
 
-    payment: {
+    isPaymentDone: {
         type: Boolean,
         default: false
     },
