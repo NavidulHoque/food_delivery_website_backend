@@ -3,11 +3,11 @@ import { User } from './../models/User.js'
 import jwt from 'jsonwebtoken'
 
 export const createAnUser = async (req, res) => {
-    const { username, email, password, provider, photo } = req.body
+    const { username, email, password, provider, photo, role } = req.body
 
     try {
 
-        const user = await User.findOne({ email, provider });
+        const user = await User.findOne({ email, provider, role });
 
         if (provider === "credentials") {
 
@@ -18,7 +18,7 @@ export const createAnUser = async (req, res) => {
                 })
             }
 
-            const newUser = new User({ username, email, password, provider })
+            const newUser = new User({ username, email, password, provider, role })
 
             await newUser.save()
 
@@ -32,7 +32,7 @@ export const createAnUser = async (req, res) => {
 
             if (!user) {
 
-                newUser = new User({ username, email, provider, photo })
+                newUser = new User({ username, email, provider, photo, role })
 
                 await newUser.save()
 
@@ -63,11 +63,11 @@ export const createAnUser = async (req, res) => {
 
 export const loginAnUser = async (req, res) => {
 
+    const { email, password, role } = req.body
+
     try {
 
-        const { email, password } = req.body
-
-        const user = await User.findOne({ email, provider: "credentials" })
+        const user = await User.findOne({ email, provider: "credentials", role })
 
         if (!user) {
             return res.json({
@@ -85,11 +85,11 @@ export const loginAnUser = async (req, res) => {
             })
         }
 
-        const { provider, username, photo, cart, _id } = user
+        const { provider, username, photo, _id } = user
 
         return res.json({
             status: true,
-            user: { id: _id.toString(), email, provider, username, photo, cart }
+            user: { id: _id.toString(), email, provider, username, photo, role }
         })
     }
 

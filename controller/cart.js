@@ -34,17 +34,18 @@ export const getCart = async (req, res) => {
 
 export const updateCart = async (req, res) => {
 
-    const { email, provider, cart } = req.body
+    const { cart } = req.body
+    const { userID } = req.params
 
     try {
 
-        await User.findOneAndUpdate({ email, provider }, { cart })
-        
+        await User.findByIdAndUpdate(userID, { cart })
+
         return res.json({
             status: true
         })
-    } 
-    
+    }
+
     catch (error) {
         console.error(error)
 

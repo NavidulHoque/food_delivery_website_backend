@@ -5,6 +5,6 @@ const router = express.Router()
 
 router.get("/get/:userID", getCart)
 
-router.put("/update", updateCart)
+router.put("/update/:userID", updateCart)
 
 export default router

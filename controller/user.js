@@ -2,17 +2,17 @@ import { User } from "../models/User.js"
 
 export const readUser = async (req, res) => {
 
-    const {email, provider} = req.body
+    const {email, provider, role} = req.body
 
     try {
 
-        const user = await User.findOne({email, provider})
+        const user = await User.findOne({email, provider, role})
 
-        const {_id, username, photo, cart} = user
+        const {_id, username, photo} = user
 
         return res.json({
             status: true,
-            user: {id: _id.toString(), email, username, photo, provider, cart}
+            user: {id: _id.toString(), email, username, photo, provider, role}
         })
     } 
     
