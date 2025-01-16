@@ -18,7 +18,7 @@ const app = express()
 const server = createServer(app)
 export const io = new Server(server, {
     cors: {
-        origin: FRONTEND_URL,
+        origin: [FRONTEND_URL, ADMIN_URL],
         credentials: true
     }
 })

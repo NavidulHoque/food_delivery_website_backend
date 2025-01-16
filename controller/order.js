@@ -21,6 +21,8 @@ export const placeOrder = async (req, res) => {
 
         await User.findByIdAndUpdate(userID, {cart: {}}, {new: true})
 
+        io.emit('orderCreated')
+
         return res.json({
             status: true
         })
@@ -43,11 +45,15 @@ export const updateDeliveryStatus = async (req, res) => {
 
     try {
 
-        const updatedOrder = await Order.findByIdAndUpdate(id, { status }, { new: true })
+        if (status === "Delivered") {
+            await Order.findByIdAndUpdate(id, { status, isPaymentDone: true })
+        }
 
-        const { _id, foodItems, totalPrice } = updatedOrder
+        else{
+            await Order.findByIdAndUpdate(id, { status })
+        }
 
-        io.emit('updateDeliveryStatus', { id: _id.toString(), foodItems, totalPrice, status })
+        io.emit('updateOrderStatus')
 
         return res.json({
             status: true
@@ -77,6 +83,7 @@ export const readUserOrders = async (req, res) => {
 
             return res.json({
                 status: false,
+                orders: [],
                 message: "No Orders to show"
             })
         }
@@ -90,7 +97,7 @@ export const readUserOrders = async (req, res) => {
 
         return res.json({
             status: true,
-            orders
+            orders: orders.reverse()
         })
     }
 
@@ -109,7 +116,7 @@ export const readAllOrders = async (req, res) => {
 
     try {
 
-        let allOrders = await Order.find({})
+        const allOrders = await Order.find({})
 
         if (allOrders.length === 0) {
 
@@ -119,7 +126,7 @@ export const readAllOrders = async (req, res) => {
             })
         }
 
-        allOrders = await Promise.all(allOrders.map(async (allOrder) => {
+        const orders = await Promise.all(allOrders.map(async (allOrder) => {
 
             const { _id, foodItems, totalPrice, customerDetails, status } = allOrder
 
@@ -128,7 +135,7 @@ export const readAllOrders = async (req, res) => {
 
         return res.json({
             status: true,
-            allOrders
+            orders: orders.reverse()
         })
     }
 
