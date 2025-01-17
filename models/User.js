@@ -67,4 +67,4 @@ UserSchema.methods.comparePassword = async function (plainPassword, hashedPasswo
     return isMatched
 }
 
-export const User = mongoose.models.User || mongoose.model('User', UserSchema)
+export const User = mongoose.model('User', UserSchema)
