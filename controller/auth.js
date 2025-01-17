@@ -32,7 +32,7 @@ export const createAnUser = async (req, res) => {
 
             if (!user) {
 
-                newUser = new User({ username, email, provider, photo, role })
+                const newUser = new User({ username, email, provider, photo, role })
 
                 await newUser.save()
 
