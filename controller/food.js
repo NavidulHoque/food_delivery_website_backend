@@ -1,5 +1,5 @@
 import { io } from "../index.js"
-import { Food } from "../models/food.js"
+import { Food } from "../models/Food.js"
 
 
 export const readFoods = async (req, res) => {
