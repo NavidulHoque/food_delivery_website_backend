@@ -122,6 +122,7 @@ export const readAllOrders = async (req, res) => {
 
             return res.json({
                 status: false,
+                orders: [],
                 message: "No Orders to show"
             })
         }
