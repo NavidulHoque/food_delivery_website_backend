@@ -22,7 +22,7 @@ export const readUser = async (req, res) => {
 
         return res.json({
             status: false,
-            message: "Something went wrong, please reload the page"
+            error
         })
     }
 }
