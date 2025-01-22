@@ -27,7 +27,7 @@ export const getCart = async (req, res) => {
 
         return res.json({
             status: false,
-            error
+            message: "Something went wrong, please reload the page"
         })
     }
 }
@@ -51,7 +51,7 @@ export const updateCart = async (req, res) => {
 
         return res.json({
             status: false,
-            error
+            message: "Something went wrong, please try again"
         })
     }
 }

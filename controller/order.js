@@ -34,7 +34,7 @@ export const placeOrder = async (req, res) => {
 
         return res.json({
             status: false,
-            error
+            message: "Something went wrong, please try again"
         })
     }
 }
@@ -66,7 +66,7 @@ export const updateDeliveryStatus = async (req, res) => {
 
         return res.json({
             status: false,
-            error
+            message: "Something went wrong, please try again"
         })
     }
 }
@@ -107,7 +107,7 @@ export const readUserOrders = async (req, res) => {
 
         return res.json({
             status: false,
-            error
+            message: "Something went wrong, please reload the page"
         })
     }
 }
@@ -146,7 +146,7 @@ export const readAllOrders = async (req, res) => {
 
         return res.json({
             status: false,
-            error
+            message: "Something went wrong, please reload the page"
         })
     }
 }

@@ -56,7 +56,7 @@ export const createAnUser = async (req, res) => {
 
         return res.json({
             status: false,
-            error
+            message: "Something went wrong, please try again"
         })
     }
 }
@@ -98,7 +98,7 @@ export const loginAnUser = async (req, res) => {
 
         return res.json({
             status: false,
-            error
+            message: "Something went wrong, please try again"
         })
     }
 }

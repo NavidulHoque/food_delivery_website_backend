@@ -19,7 +19,7 @@ export const readFoods = async (req, res) => {
 
         return res.json({
             status: false,
-            error
+            message: "Something went wrong, please reload the page"
         })
     }
 
@@ -53,7 +53,7 @@ export const createFood = async (req, res) => {
 
         return res.json({
             status: false,
-            error
+            message: "Something went wrong, please try again"
         })
     }
 }
@@ -78,8 +78,7 @@ export const deleteFood = async (req, res) => {
 
         return res.json({
             status: false,
-            error
+            message: "Something went wrong, please try again"
         })
     }
-
 }
