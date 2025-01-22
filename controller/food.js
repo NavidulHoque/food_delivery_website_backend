@@ -56,7 +56,6 @@ export const createFood = async (req, res) => {
             error
         })
     }
-
 }
 
 export const deleteFood = async (req, res) => {
